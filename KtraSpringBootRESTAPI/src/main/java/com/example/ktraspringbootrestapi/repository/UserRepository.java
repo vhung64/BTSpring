@@ -126,7 +126,9 @@ public class UserRepository {
     }
 
     public PagaUser getPageUser(int page, int limit) {
-        int totalPage = (FakeDB.users.size()/limit) + 1;
+        int totalPage = FakeDB.users.size()/limit;
+        if(FakeDB.users.size()%limit !=0)
+            totalPage = +1;
         int size = limit;
         int currentPage = page;
         int n = (page-1)*limit;
