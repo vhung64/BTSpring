@@ -12,7 +12,7 @@ import java.util.List;
 @Getter
 @ToString
 public class PagaUser {
-    private List<User> list;
+    private List<UserDto> list;
     private int currentPage;
     private int size;
     private int totalPage;

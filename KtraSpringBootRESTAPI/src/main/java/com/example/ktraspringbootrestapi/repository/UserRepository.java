@@ -132,9 +132,17 @@ public class UserRepository {
         int size = limit;
         int currentPage = page;
         int n = (page-1)*limit;
-        List<User> list = new ArrayList<>();
+        List<UserDto> list = new ArrayList<>();
         while (n < Math.min(FakeDB.users.size()-(page-1)*limit,limit)){
-            list.add(FakeDB.users.get(n));
+            UserDto userDto = new UserDto(
+                    FakeDB.users.get(n).getId(),
+                    FakeDB.users.get(n).getName(),
+                    FakeDB.users.get(n).getEmail(),
+                    FakeDB.users.get(n).getPhone(),
+                    FakeDB.users.get(n).getAddress(),
+                    FakeDB.users.get(n).getAvatar()
+            );
+            list.add(userDto);
             n++;
         }
         return new PagaUser(list,currentPage,size,totalPage);
