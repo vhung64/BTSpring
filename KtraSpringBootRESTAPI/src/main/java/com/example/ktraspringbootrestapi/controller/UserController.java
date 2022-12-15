@@ -3,12 +3,14 @@ package com.example.ktraspringbootrestapi.controller;
 import com.example.ktraspringbootrestapi.model.PagaUser;
 import com.example.ktraspringbootrestapi.model.User;
 import com.example.ktraspringbootrestapi.model.UserDto;
-import com.example.ktraspringbootrestapi.repository.UserRepository;
 import com.example.ktraspringbootrestapi.request.UpsertPasswordRequest;
 import com.example.ktraspringbootrestapi.request.UpsertUserRequest;
 import com.example.ktraspringbootrestapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -46,8 +48,8 @@ public class UserController {
     //4. Tạo mới user
     //POST http://localhost:8080/api/v1/users
     @PostMapping("users")
-    public UserDto creatUser(@RequestBody UpsertUserRequest request){
-        return userService.creatUser(request);
+    public UserDto createUser(@RequestBody UpsertUserRequest request){
+        return userService.createUser(request);
     }
     //5. Cập nhật thông tin user
     //PUT http://localhost:8080/api/v1/users/{id}
@@ -80,4 +82,31 @@ public class UserController {
         return userService.fotgotPassword(id);
     }
 
+    //UploadFile
+    @PostMapping("users/{id}/files")
+    public ResponseEntity<?> uploadFile(@PathVariable int id, @ModelAttribute("file")MultipartFile file){
+        String filePath = userService.uploadFile(id ,file);
+        return ResponseEntity.ok(filePath);
+    }
+    // Xem anh bype[]
+    @GetMapping("users/{id}/files/{fileID}")
+    public ResponseEntity<?> readFile(@PathVariable int id, @PathVariable String fileID){
+        byte[] bytes = userService.readFile(id,fileID);
+        return ResponseEntity.ok()
+                .contentType(MediaType.IMAGE_JPEG)
+                .body(bytes);
+    }
+    // Lấy danh sách ảnh
+    @GetMapping("/users/{id}/files")
+    public ResponseEntity<?> getFiles(@PathVariable int id) {
+        List<String> files = userService.getFiles(id);
+        return ResponseEntity.ok(files); // 200
+    }
+
+    // Xóa ảnh
+    @DeleteMapping("/users/{id}/files/{fileId}")
+    public ResponseEntity<?> deleteFile(@PathVariable int id, @PathVariable String fileId) {
+        userService.deleteFile(id, fileId);
+        return ResponseEntity.noContent().build(); // 204
+    }
 }

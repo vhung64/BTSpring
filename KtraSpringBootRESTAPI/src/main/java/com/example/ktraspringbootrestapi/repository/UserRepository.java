@@ -19,13 +19,12 @@ import java.util.Random;
 public class UserRepository {
 
     public List<User> findALl(){
-
         return FakeDB.users;
     }
     public List<UserDto> getUserByName(String name) {
         List<UserDto> result = new ArrayList<>();
         for(User user : FakeDB.users){
-            if(findName(user.getName()).equals(name)){
+            if(findName(user.getName()).equals(name.toLowerCase())){
                 UserDto userDto = new UserDto(
                         user.getId(),
                         user.getName(),
@@ -51,12 +50,12 @@ public class UserRepository {
                 .findFirst();
     }
 
-    public User creatUser(UpsertUserRequest request) {
+    public User createUser(UpsertUserRequest request) {
         Random rd = new Random();
-        int id;
-        do {
+        int id = rd.nextInt(200);
+        while (getAllID().contains(id)){
             id = rd.nextInt(200);
-        }while (getAllID().contains(id));
+        }
         User user = new User(
                 id,
                 request.getName(),

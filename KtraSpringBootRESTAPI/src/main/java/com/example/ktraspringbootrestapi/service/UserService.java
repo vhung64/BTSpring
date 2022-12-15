@@ -9,6 +9,7 @@ import com.example.ktraspringbootrestapi.request.UpsertPasswordRequest;
 import com.example.ktraspringbootrestapi.request.UpsertUserRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -18,6 +19,9 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private FileService fileService;
 
 
     public List<UserDto> getUserByName(String name) {
@@ -40,14 +44,15 @@ public class UserService {
         else throw new NotFoundException("Not found exception with " + id);
     }
 
-    public UserDto creatUser(UpsertUserRequest request) {
+    public UserDto createUser(UpsertUserRequest request) {
+        User user = userRepository.createUser(request);
         UserDto userDto = new UserDto(
-                userRepository.creatUser(request).getId(),
-                userRepository.creatUser(request).getName(),
-                userRepository.creatUser(request).getEmail(),
-                userRepository.creatUser(request).getPhone(),
-                userRepository.creatUser(request).getAddress(),
-                userRepository.creatUser(request).getAvatar()
+                user.getId(),
+                user.getName(),
+                user.getEmail(),
+                user.getPhone(),
+                user.getAddress(),
+                user.getAvatar()
         );
         return userDto;
     }
@@ -79,5 +84,24 @@ public class UserService {
 
     public PagaUser getPageUser(int page, int limit) {
         return userRepository.getPageUser(page,limit);
+    }
+
+    public String uploadFile(int id, MultipartFile file) {
+        userRepository.findUserById(id).orElseThrow(() -> new NotFoundException("Not found id with " + id));
+        return fileService.uploadFile(id, file);
+    }
+    public byte[] readFile(int id, String fileID) {
+        userRepository.findUserById(id).orElseThrow(() -> new NotFoundException("Not found id with " + id));
+        return fileService.readFile(id,fileID);
+    }
+
+    public List<String> getFiles(int id) {
+        userRepository.findUserById(id).orElseThrow(() -> new NotFoundException("Not found id with " + id));
+        return fileService.getFiles(id);
+    }
+
+    public void deleteFile(int id, String fileId) {
+        userRepository.findUserById(id).orElseThrow(() -> new NotFoundException("Not found id with " + id));
+        fileService.deleteFile(id,fileId);
     }
 }

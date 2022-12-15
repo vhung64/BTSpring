@@ -2,7 +2,6 @@ package com.example.ktraspringbootrestapi.request;
 
 
 import lombok.*;
-
 @AllArgsConstructor
 @Setter
 @Getter
