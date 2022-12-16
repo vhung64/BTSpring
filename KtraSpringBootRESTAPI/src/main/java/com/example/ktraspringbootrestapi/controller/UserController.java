@@ -77,7 +77,7 @@ public class UserController {
     }
     //9. Quên mật khẩu
     //POST http://localhost:8080/api/v1/users/{id}/fotgot-password
-    @PostMapping("users/{id}/fotgot-password")
+    @PostMapping("users/{id}/forgot-password")
     public String fotgotPassword(@PathVariable int id){
         return userService.fotgotPassword(id);
     }
