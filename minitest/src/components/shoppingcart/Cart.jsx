@@ -15,7 +15,7 @@ function Cart() {
             name: "Sản phẩm 2",
             image: "https://images.unsplash.com/photo-1612423284934-2850a4ea6b0f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mjl8fGNsb3RoZXN8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60",
             price: 400000,
-            count: 2,
+            count: 1,
             size: "L"
         },
         {
@@ -23,7 +23,7 @@ function Cart() {
             name: "Sản phẩm 3",
             image: "https://images.unsplash.com/photo-1564584217132-2271feaeb3c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MzJ8fGNsb3RoZXN8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60",
             price: 500000,
-            count: 3,
+            count: 1,
             size: "XL"
         }
     ])
