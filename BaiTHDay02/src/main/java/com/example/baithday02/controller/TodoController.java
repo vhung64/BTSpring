@@ -19,8 +19,8 @@ public class TodoController {
         return toDoService.getList();
     }
     @PostMapping("todos")
-    public Todo creatToDo(@RequestBody TodoRequest todo){
-        return toDoService.creatToDO(todo);
+    public Todo createToDo(@RequestBody TodoRequest todo){
+        return toDoService.createToDO(todo);
     }
     @PutMapping("todos/{id}")
     public Todo updateTodo(@RequestBody UpdateRepuestTodo todo,@PathVariable int id){

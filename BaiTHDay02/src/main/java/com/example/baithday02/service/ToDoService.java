@@ -25,7 +25,7 @@ public class ToDoService {
         return list;
     }
 
-    public Todo creatToDO(TodoRequest todo) {
+    public Todo createToDO(TodoRequest todo) {
         Random random = new Random();
         int id = random.nextInt(900) + 100;
         while (findbyID(id).isPresent()){

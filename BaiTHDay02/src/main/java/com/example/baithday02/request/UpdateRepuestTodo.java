@@ -14,4 +14,3 @@ public class UpdateRepuestTodo {
     private String title;
     private boolean status;
 }
-
